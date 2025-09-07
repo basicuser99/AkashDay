@@ -2,25 +2,64 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Our Moments</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Our Moments ✨</title>
+  <style>
+    body, html { margin:0;padding:0;height:100%;overflow:hidden; background:#222; font-family:monospace; color:white; text-align:center;}
+    h1 { margin-top:5%; font-size:2.5em;}
+    #typewriter{margin-top:20px;font-size:1.3em; white-space: pre-line;}
+    canvas {position:fixed;top:0;left:0; z-index:-1;}
+  </style>
 </head>
-<body class="vinyl">
-  <div class="container">
-    <h1>✨ Our Favorite Moments ✨</h1>
-    <p>Here comes the sun... and with it, my favorite memories:</p>
-    <ul>
-      <li>🎶 Listening to The Beatles with you.</li>
-      <li>🪐 Jupiter talking and watching tangerines with you.</li>
-      <li>📸 That one photo of you during onam. </li>
-      <li>💌 All our inside jokes ad code words.</li>
-    </ul>
+<body>
+  <h1>✨ Our Favorite Moments</h1>
+  <div id="typewriter"></div>
+  <canvas id="confetti"></canvas>
 
-    <nav>
-      <a href="index.html">🏠 Home</a>
-      <a href="poem.html">📜 Poem</a>
-      <a href="achievements.html">🏆 Achievements</a>
-    </nav>
-  </div>
+  <script>
+    // Confetti
+    const canvas=document.getElementById("confetti");
+    const ctx=canvas.getContext("2d");
+    canvas.width=window.innerWidth;
+    canvas.height=window.innerHeight;
+
+    let confetti=[];
+    function Confetti(){
+      this.x=Math.random()*canvas.width;
+      this.y=Math.random()*canvas.height;
+      this.size=5+Math.random()*5;
+      this.speed=Math.random()*2+1;
+      this.color=`hsl(${Math.random()*360},80%,60%)`;
+    }
+    Confetti.prototype.draw=function(){
+      ctx.fillStyle=this.color;
+      ctx.fillRect(this.x,this.y,this.size,this.size);
+    }
+    Confetti.prototype.update=function(){
+      this.y+=this.speed;
+      if(this.y>canvas.height){ this.y=0; this.x=Math.random()*canvas.width; }
+      this.draw();
+    }
+    function init(){ confetti=[]; for(let i=0;i<150;i++) confetti.push(new Confetti()); }
+    function animate(){ ctx.clearRect(0,0,canvas.width,canvas.height); confetti.forEach(c=>c.update()); requestAnimationFrame(animate); }
+    init(); animate();
+
+    // Typewriter
+    const text=[
+      "> Here comes the sun...",
+      "> Listening to Beatles together 🎶",
+      "> Stargazing talks & laughter 🌌",
+      "> All the little things that make 'us' ours 💖"
+    ];
+    let line=0,char=0;
+    const target=document.getElementById("typewriter");
+    const speed=50;
+    function type(){ 
+      if(line<text.length){
+        if(char<text[line].length){ target.innerHTML+=text[line][char++]; setTimeout(type,speed);}
+        else{ target.innerHTML+="\n"; line++; char=0; setTimeout(type,800);}
+      }
+    }
+    type();
+  </script>
 </body>
 </html>
