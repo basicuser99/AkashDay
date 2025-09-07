@@ -2,26 +2,154 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Your Achievements</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body class="matrix">
-  <div class="container">
-    <h1>🏆 Things I’m Proud Of That You Did This Year</h1>
-    <ul>
-      <li>🌌 You kept working hard, even when things got tough.</li>
-      <li>💻 You grew so much in coding & problem-solving.</li>
-      <li>🚀 You never stopped hoping and striving fpr the better.</li>
-      <li>💙 And you always made time for us, even when busy.</li>
-      <li>🍛 You switched from Zomato to cooking yourself. </li>
-      <li>📖 You started Anki </li>
-    </ul> 
+  <title>Achievements of Akash 🏆</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center; /* vertical center */
+      align-items: center;     /* horizontal center */
+      text-align: center;      /* centers all text */
+      font-family: monospace;
+      color: white;
+      background: #1a1a2e; /* dark navy for a sleek look */
+      overflow: hidden;
+    }
 
-    <nav>
-      <a href="index.html">🏠 Home</a>
-      <a href="poem.html">📜 Poem</a>
-      <a href="moments.html">✨ Moments</a>
-    </nav>
+    h1 {
+      font-size: 3em;
+      margin: 0.5em 0;
+      text-shadow: 2px 2px 10px #fff;
+    }
+
+    #typewriter {
+      font-size: 1.4em;
+      white-space: pre-line;
+      margin: 0.5em 0;
+    }
+
+    #nav {
+      margin-top: 20px;
+    }
+
+    #nav a {
+      color: white;
+      margin: 10px;
+      text-decoration: none;
+      font-size: 1.2em;
+    }
+
+    #nav a:hover {
+      transform: scale(1.2);
+      text-shadow: 0 0 10px #fff;
+      transition: 0.3s;
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -1; /* behind content */
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🏆 Achievements of Akash 🏆</h1>
+
+  <div id="typewriter"></div>
+
+  <div id="nav">
+    <a href="index.html">🏠 Home</a>
+    <a href="mission.html">🚀 Mission</a>
+    <a href="achievements.html">🏆 Achievements</a>
+    <a href="poem.html">💖 Poem</a>
+    <a href="moments.html">✨ Moments</a>
+    <a href="terminal.html">💻 Terminal</a>
   </div>
+
+  <!-- Background animation canvas -->
+  <canvas id="confetti"></canvas>
+
+  <script>
+    // Typewriter effect for achievements
+    const achievements = [
+
+<ul>
+  <li>> You kept working hard, even when things got tough</li>
+  <li>> You grew so much in coding & problem-solving.</li>
+  <li>> You never stopped hoping and striving for the better.</li>
+  <li>> And you always made time for us, even when busy.</li>
+  <li>> You switched from Zomato to cooking yourself.</li>
+  <li>> You started Anki.</li>
+</ul>
+
+
+    let line = 0, char = 0;
+    const target = document.getElementById('typewriter');
+
+    function type() {
+      if (line < achievements.length) {
+        if (char < achievements[line].length) {
+          target.innerHTML += achievements[line][char];
+          char++;
+          setTimeout(type, 50);
+        } else {
+          target.innerHTML += "\n";
+          line++;
+          char = 0;
+          setTimeout(type, 600);
+        }
+      }
+    }
+    type();
+
+    // Confetti background
+    const canvas = document.getElementById('confetti');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const confetti = [];
+    const confettiCount = 100;
+
+    for (let i = 0; i < confettiCount; i++) {
+      confetti.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: Math.random() * 6 + 2,
+        d: Math.random() * confettiCount
+      });
+    }
+
+    function drawConfetti() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      confetti.forEach(c => {
+        ctx.beginPath();
+        ctx.arc(c.x, c.y, c.r, 0, Math.PI*2);
+        ctx.fillStyle = `hsl(${Math.random()*360}, 100%, 50%)`;
+        ctx.fill();
+      });
+      updateConfetti();
+      requestAnimationFrame(drawConfetti);
+    }
+
+    function updateConfetti() {
+      confetti.forEach(c => {
+        c.y += 2 + Math.random() * 2;
+        if (c.y > canvas.height) {
+          c.y = -10;
+          c.x = Math.random() * canvas.width;
+        }
+      });
+    }
+
+    drawConfetti();
+  </script>
 </body>
 </html>
+
