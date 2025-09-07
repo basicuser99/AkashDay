@@ -47,3 +47,18 @@ nav a:hover {
   background: url('https://www.transparenttextures.com/patterns/asfalt-dark.png') repeat;
   background-color: #111;
 }
+/* Jupiter feature styling */
+#jupiter {
+  font-size: 24px;
+  margin: 20px;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+#jupiter:hover {
+  transform: scale(1.2);
+}
+#space-fact {
+  margin-top: 10px;
+  font-style: italic;
+  font-size: 18px;
+}
