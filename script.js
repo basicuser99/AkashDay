@@ -32,3 +32,44 @@ function type() {
 }
 
 type();
+
+// =======================
+// Jupiter Facts
+// =======================
+const facts = [
+  "Jupiter is so big that 1,300 Earths could fit inside it.",
+  "A day on Jupiter lasts only 10 hours!",
+  "Jupiter has at least 95 moons — one is called Europa, covered in ice.",
+  "The Great Red Spot is a storm bigger than Earth that has lasted 350+ years!"
+];
+
+function showFact() {
+  const fact = facts[Math.floor(Math.random() * facts.length)];
+  document.getElementById("space-fact").innerText = fact;
+}
+
+// =======================
+// Countdown to Next Birthday
+// =======================
+const nextBirthday = new Date("2026-09-09 T20:40:00"); 
+
+function updateCountdown() {
+  const now = new Date();
+  const diff = nextBirthday - now;
+
+  if (diff <= 0) {
+    document.getElementById("countdown").innerText = "🎉 It's your birthday again! 🎉";
+    return;
+  }
+
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+  const mins = Math.floor((diff / (1000 * 60)) % 60);
+
+  document.getElementById("countdown").innerText =
+    `⏳ ${days} days, ${hours} hours, ${mins} mins until your next orbit around the Sun 🌞`;
+}
+
+setInterval(updateCountdown, 60000);
+updateCountdown();
+
