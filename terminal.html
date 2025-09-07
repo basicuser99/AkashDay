@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Love Terminal 💻</title>
+  <style>
+    body{background:black;color:#00ff00;font-family:monospace;padding:20px;}
+    .cursor{display:inline-block;width:10px;background:#00ff00;animation:blink 1s infinite;}
+    @keyframes blink{50%{background:transparent;}}
+  </style>
+</head>
+<body>
+  <pre id="terminal"></pre><span class="cursor"></span>
+
+  <script>
+    const lines = [
+  "> Welcome to the Jupiter Terminal 🌌",
+  "> Diameter: 139,820 km",
+  "> Mass: 1.898 × 10^27 kg",
+  "> Moons: 95 known (and counting!)",
+  "> Fun fact: Jupiter's Great Red Spot is a storm twice the size of Earth 🌪️",
+  "> Temperature: -145°C (cloud tops)",
+  "> Orbital period: 11.86 Earth years",
+  "> Did you know? Jupiter radiates more heat than it receives from the Sun 🔥",
+  "> Observation log: I think about you at least 3.14 times per orbit 💫",
+  "> Alert: My heart cannot contain infinite admiration 💚",
+  "> Conclusion: You are my favorite spot in this entire solar system 🪐"
+];
+
+    let i=0,j=0,out="";
+    function type(){
+      if(i<lines.length){
+        if(j<lines[i].length){ out+=lines[i][j++]; document.getElementById("terminal").innerText=out; setTimeout(type,100);}
+        else{ out+="\n"; i++; j=0; setTimeout(type,500);}
+      }
+    }
+    type();
+  </script>
+</body>
+</html>
