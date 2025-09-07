@@ -2,39 +2,98 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Love Terminal 💻</title>
+  <title>Jupiter Terminal 💻</title>
   <style>
-    body{background:black;color:#00ff00;font-family:monospace;padding:20px;}
-    .cursor{display:inline-block;width:10px;background:#00ff00;animation:blink 1s infinite;}
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center; /* vertical center */
+      align-items: center;     /* horizontal center */
+      background: black;
+      color: #00ff00;
+      font-family: monospace;
+    }
+    pre#terminal {
+      max-width: 80%;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      font-size: 1.2em;
+    }
+    .cursor { display:inline-block; width:10px; background:#00ff00; animation:blink 1s infinite; }
     @keyframes blink{50%{background:transparent;}}
+    #nav a { color:#00ff00; margin:0 15px; text-decoration:none; }
+    #nav a:hover { text-shadow:0 0 10px #0f0; transform:scale(1.1); transition:0.3s; }
+    canvas { position: fixed; top:0; left:0; z-index:-1; }
   </style>
 </head>
 <body>
+
+  <!-- Navigation -->
+  <div id="nav">
+    <a href="index.html">🏠 Home</a>
+    <a href="mission.html">🚀 Mission</a>
+    <a href="achievements.html">🏆 Achievements</a>
+    <a href="poem.html">💖 Poem</a>
+    <a href="moments.html">✨ Moments</a>
+    <a href="terminal.html">💻 Terminal</a>
+  </div>
+
+  <!-- Terminal -->
   <pre id="terminal"></pre><span class="cursor"></span>
 
-  <script>
-    const lines = [
-  "> Welcome to the Jupiter Terminal 🌌",
-  "> Diameter: 139,820 km",
-  "> Mass: 1.898 × 10^27 kg",
-  "> Moons: 95 known (and counting!)",
-  "> Fun fact: Jupiter's Great Red Spot is a storm twice the size of Earth 🌪️",
-  "> Temperature: -145°C (cloud tops)",
-  "> Orbital period: 11.86 Earth years",
-  "> Did you know? Jupiter radiates more heat than it receives from the Sun 🔥",
-  "> Observation log: I think about you at least 3.14 times per orbit 💫",
-  "> Alert: My heart cannot contain infinite admiration 💚",
-  "> Conclusion: You are my favorite spot in this entire solar system 🪐"
-];
+  <!-- Optional background animation canvas -->
+  <canvas id="stars"></canvas>
 
+  <script>
+  window.onload = function() {
+    // Terminal typing
+    const lines = [
+      "> Welcome to Jupiter Terminal 🌌",
+      "> Diameter: 139,820 km",
+      "> Mass: 1.898 × 10^27 kg",
+      "> Moons: 95 known (and counting!)",
+      "> Fun fact: Jupiter's Great Red Spot is a storm twice the size of Earth 🌪️",
+      "> Did you know? Jupiter radiates more heat than it receives from the Sun 🔥",
+      "> Observation log: I think about you at least 3.14 times per orbit 💫",
+      "> Alert: My heart cannot contain infinite admiration 💚",
+      "> Conclusion: You are my favorite planet in this entire solar system 🪐"
+    ];
     let i=0,j=0,out="";
+    const target=document.getElementById("terminal");
     function type(){
       if(i<lines.length){
-        if(j<lines[i].length){ out+=lines[i][j++]; document.getElementById("terminal").innerText=out; setTimeout(type,100);}
+        if(j<lines[i].length){ out+=lines[i][j++]; target.innerText=out; setTimeout(type,50);}
         else{ out+="\n"; i++; j=0; setTimeout(type,500);}
       }
     }
     type();
+
+    // Optional stars background
+    const canvas=document.getElementById("stars");
+    const ctx=canvas.getContext("2d");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    let stars=[];
+    for(let k=0;k<100;k++){
+      stars.push({x:Math.random()*canvas.width, y:Math.random()*canvas.height, r:Math.random()*2});
+    }
+    function animateStars(){
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      ctx.fillStyle="white";
+      stars.forEach(s=>{
+        ctx.beginPath();
+        ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+        ctx.fill();
+      });
+      requestAnimationFrame(animateStars);
+    }
+    animateStars();
+  };
   </script>
 </body>
 </html>
