@@ -2,28 +2,134 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Happy Birthday, My Love 🚀</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Happy Birthday Akash!</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      height: 100%;
+      background: #87ceeb;
+      font-family: monospace;
+      text-align: center;
+      color: white;
+    }
+    h1 {
+      font-size: 3em;
+      margin-top: 10%;
+      text-shadow: 2px 2px 5px #000;
+    }
+    #typewriter {
+      margin-top: 30px;
+      font-size: 1.4em;
+      white-space: pre-line;
+      text-shadow: 1px 1px 3px #000;
+    }
+    #nav a {
+      color: white;
+      font-size: 1.2em;
+      margin: 10px;
+      text-decoration: none;
+    }
+    #nav a:hover {
+      transform: scale(1.2);
+      text-shadow: 0 0 10px #fff;
+      transition: 0.3s;
+    }
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+  </style>
 </head>
-<body class="stars">
-  <div class="container">
-    <h1 class="title">🌌 Happy Birthday, Love! 🌌</h1>
-    <p id="typewriter"></p>
+<body>
+  <h1>🎉 Happy Birthday, Akash!! 🎂</h1>
 
-    <nav>
-      <a href="poem.html">📜 Poem</a>
-      <a href="achievements.html">🏆 Achievements</a>
-      <a href="moments.html">✨ Moments</a>
-      <a href="mission.html">🚀 Mission Plan</a>
-      <a href="terminal.html" style="display:none;">💻 Secret</a>
-    </nav>
+  <!-- Typewriter text -->
+  <div id="typewriter"></div>
 
-    <div id="countdown"></div>
-
-    <div id="jupiter" onclick="showFact()">🪐 Click Jupiter for a surprise</div>
-    <p id="space-fact"></p>
+  <!-- Navigation bar -->
+  <div id="nav">
+    <a href="index.html">🏠 Home</a>
+    <a href="mission.html">🚀 Mission</a>
+    <a href="achievements.html">🏆 Achievements</a>
+    <a href="poem.html">💖 Poem</a>
+    <a href="moments.html">✨ Moments</a>
+    <a href="terminal.html">💻 Terminal</a>
   </div>
 
-  <script src="script.js"></script>
+  <!-- Balloon canvas -->
+  <canvas id="balloons"></canvas>
+
+  <script>
+    // Balloons animation
+    const canvas = document.getElementById('balloons');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    let balloons = [];
+    function Balloon() {
+      this.x = Math.random() * canvas.width;
+      this.y = canvas.height + Math.random() * 100;
+      this.radius = 20 + Math.random() * 20;
+      this.color = `hsl(${Math.random() * 360}, 70%, 60%)`;
+      this.speed = 1 + Math.random() * 2;
+    }
+    Balloon.prototype.draw = function() {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+      ctx.fillStyle = this.color;
+      ctx.fill();
+    }
+    Balloon.prototype.update = function() {
+      this.y -= this.speed;
+      if (this.y + this.radius < 0) {
+        this.y = canvas.height + this.radius;
+        this.x = Math.random() * canvas.width;
+      }
+      this.draw();
+    }
+    function init() {
+      balloons = [];
+      for (let i = 0; i < 40; i++) balloons.push(new Balloon());
+    }
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      balloons.forEach(b => b.update());
+      requestAnimationFrame(animate);
+    }
+    init();
+    animate();
+
+    // Typewriter text
+    const text = [
+      "> Compiling reasons I love you...",
+      "> Done. (Too many to fit here!)",
+      "> Wishing you the happiest birthday 💙"
+    ];
+    let line = 0;
+    let char = 0;
+    const speed = 50;
+    const target = document.getElementById("typewriter");
+
+    function type() {
+      if (line < text.length) {
+        if (char < text[line].length) {
+          target.innerHTML += text[line][char];
+          char++;
+          setTimeout(type, speed);
+        } else {
+          target.innerHTML += "\n";
+          line++;
+          char = 0;
+          setTimeout(type, 800);
+        }
+      }
+    }
+    type();
+  </script>
 </body>
 </html>
